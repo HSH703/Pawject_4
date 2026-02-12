@@ -158,7 +158,7 @@ jobs:       # 실행할 job 정의
         run: |
           npm install
           npm run build -- --no-lint
-        working-directory: pawject4_front
+        working-directory: front
 
       - name: Debug Frontend Files
         run: |
