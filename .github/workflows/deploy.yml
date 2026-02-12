@@ -20,11 +20,11 @@ jobs:       # 실행할 job 정의
 
       - name: Grant execute permission for gradlew  
         run: chmod +x ./gradlew       # gradlew 실행권한
-        working-directory: pawject4_back       # back 디렉토리에서실행  ##
+        working-directory: back       # back 디렉토리에서실행  ##
 
       - name: Build Spring Boot App
         run: ./gradlew clean build -x test  # 테스트제외하고 빌드
-        working-directory: pawject4_back      # back 디렉토리
+        working-directory: back      # back 디렉토리
 
       - name: Debug Backend Files
         run: |
