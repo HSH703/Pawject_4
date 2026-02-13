@@ -54,7 +54,7 @@ dependencies {
    
    // oracle 
    //runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
-	runtimeOnly 'com.oracle.database.jdbc:ojdbc6:11.2.0.4'
+   runtimeOnly 'com.oracle.database.jdbc:ojdbc6:11.2.0.4'
     
     // Gson
     implementation 'com.google.code.gson:gson:2.11.0'

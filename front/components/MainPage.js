@@ -38,7 +38,7 @@ export default function MainPage({
       {/* ✅ Row에 justify="center" 추가 → Col을 중앙 배치 */}
       <Row gutter={[16, 16]} justify="center">
         {/* ✅ Col 폭을 줄여서 중앙에 위치 */}
-        <Col xs={24} md={22} lg={20}>ko
+        <Col xs={24} md={22} lg={20}>
           <Card title="🐾 Petfood & Health" bordered={false}>
             {/* ✅ 내부 내용은 그대로 유지 */}
             <Title level={3}>
