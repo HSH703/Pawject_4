@@ -1,16 +1,13 @@
 spring:
-  profiles:
-    active: private
-
   datasource:
-    url: jdbc:oracle:thin:@localhost:1521:XE
-    username: scott
-    password: tiger
+    url: jdbc:oracle:thin:@localhost:1521:XE  ####################
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: oracle.jdbc.OracleDriver
 
   jpa:
     hibernate:
-      ddl-auto: update 
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -20,33 +17,27 @@ spring:
     multipart:
       enabled: true
       max-file-size: 10MB
-      max-request-size: 20MB
+      max-request-size: 20MB      
 
   data:
     redis:
       host: localhost
-      port: 6379pm2 
+      port: 6379
       timeout: 2000
 
   config:
     import:
-      - optional:application-oauth.yml  
-      - optional:file:.env[.properties] 
-
-server:
-  port: 8080
+      - optional:application-oauth.yml
+      - optional:file:.env[.properties]  
 
 mybatis:
   config-location: classpath:mybatis-config.xml
   mapper-locations: classpath:mapper/**/*.xml
-  type-aliases-package: com.pawject.domain
+  type-aliases-package: com.thejoa703.domain 
 
-  mybatis:
-    configuration:
-      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 jwt:
-  issuer: pawject
-  secret: very-very-long-secret-key-at-least-32-characters
+  issuer: thejoa703
+  secret: ${JWT_SECRET}
   access-token-exp-seconds: 900       # 15분
   refresh-token-exp-seconds: 1209600  # 14일
   header: Authorization
@@ -56,13 +47,9 @@ file:
   upload-dir: /home/ubuntu/app/back/build/libs/uploads
   # upload-dir: uploads
 
-## 개인 api 오류 방지용 - 빈값 넣어주세요 (공용)
-openai:
-  api:
-    key:
-      hj: ""
+server:
+  port: 8080
 
-naver:
-  ocr:
-    key: ""
-    url: ""
+jackson:
+  time-zone: UTC
+
