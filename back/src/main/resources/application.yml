@@ -25,12 +25,12 @@ spring:
   data:
     redis:
       host: localhost
-      port: 6379
+      port: 6379pm2 
       timeout: 2000
 
   config:
     import:
-      - optional:application-oauth.yml
+      - optional:application-oauth.yml  
       - optional:file:.env[.properties] 
 
 server:
