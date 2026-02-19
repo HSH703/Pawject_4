@@ -109,12 +109,8 @@ export default function AppLayout({ children }) {
       ) : latestAds && latestAds.length > 0 ? (
         <Row gutter={[8, 8]}>
           {latestAds.map((ad) => {
-            // ✅ 항상 ad 객체를 통해 접근
-            const imageUrl = ad.imgUrl 
-              ? ad.imgUrl 
-              : ad.img 
-                ? `${API_URL}/upload/${ad.img}` 
-                : null;
+            const imageUrl =
+              ad.imgUrl || (ad.img ? `${API_URL}/upload/${ad.img}` : null);
 
             return (
               <Col span={24} key={ad.id}>
@@ -124,10 +120,10 @@ export default function AppLayout({ children }) {
                   style={{ borderRadius: 8 }}
                   cover={
                     imageUrl ? (
-                      <img
-                        src={imageUrl}
-                        alt="광고 이미지"
-                        style={{ maxHeight: 150, objectFit: "cover" }}
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${img}`}
+                        alt={`post image ${idx}`}
+                        style={{ maxWidth: "100%", borderRadius: "12px", objectFit: "cover" }}
                       />
                     ) : null
                   }
