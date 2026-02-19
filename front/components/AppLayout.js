@@ -122,7 +122,7 @@ export default function AppLayout({ children }) {
                   cover={
                     imageUrl ? (
                       <img
-                        src={`${ad.img}`} // ✅ imageUrl을 그대로 사용         
+                        src={`/${ad.img}`} // ✅ imageUrl을 그대로 사용         
                         alt={`광고 이미지 ${idx}`} // ✅ idx를 map에서 받아 사용
                         style={{ maxHeight: 300, objectFit: "cover", borderRadius: "8px" }}
                       />
