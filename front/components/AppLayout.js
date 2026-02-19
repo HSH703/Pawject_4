@@ -110,8 +110,8 @@ export default function AppLayout({ children }) {
         <Row gutter={[8, 8]}>
           {latestAds.map((ad, idx) => {
             // ✅ 항상 ad 객체를 통해 접근
-            const imageUrl =
-              ad.imgUrl || (ad.img ? `${ process.env.NEXT_PUBLIC_API_URL}/upload/${ad.img}` : null);
+            //const imageUrl =
+            //  ad.imgUrl || (ad.img ? `${process.env.NEXT_PUBLIC_API_URL}/upload/${ad.img}` : null);
 
             return (
               <Col span={24} key={ad.id || idx}>
@@ -122,7 +122,7 @@ export default function AppLayout({ children }) {
                   cover={
                     imageUrl ? (
                       <img
-                        src={imageUrl} // ✅ imageUrl을 그대로 사용         
+                        src={`${ad.img}`} // ✅ imageUrl을 그대로 사용         
                         alt={`광고 이미지 ${idx}`} // ✅ idx를 map에서 받아 사용
                         style={{ maxHeight: 300, objectFit: "cover", borderRadius: "8px" }}
                       />
