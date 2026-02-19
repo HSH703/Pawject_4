@@ -24,7 +24,7 @@ export default function AdListPage() {
   };
 
   //const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8484";
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://54.180.94.156";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://54.180.94.156";   
 
   const columns = [
     {
