@@ -7,6 +7,7 @@ import { useMemo, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchLatestAdsRequest } from "../reducers/ad/adReducer";
 import { parseJwt } from "../utils/jwt";
+import { fileUrl } from "../utils/fileUrl";
 
 const { Header, Content } = Layout;
 const { useBreakpoint } = Grid;
@@ -97,9 +98,10 @@ export default function AppLayout({ children }) {
     return found ? [found.key] : ["/"];
   }, [router.pathname, menuItems]);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+   
+   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8484";
 
-  // ✅ 광고 카드 렌더링 함수
+  // ✅ 광고 카드 렌더링 함수 (중복 제거)
   const renderAds = () => (
     <Card title="📢 최신 광고" bordered={false} size="small">
       {loading ? (
@@ -108,13 +110,13 @@ export default function AppLayout({ children }) {
         <Text type="danger">광고 불러오기 실패: {error}</Text>
       ) : latestAds && latestAds.length > 0 ? (
         <Row gutter={[8, 8]}>
-          {latestAds.map((ad, idx) => {
-            // ✅ 항상 ad 객체를 통해 접근
-            const imageUrl =
-               ad.img || (ad.img ? `${process.env.NEXT_PUBLIC_API_URL}/upload/${ad.img}` : null);
-
+          {latestAds.map((ad) => {
+            // const imageUrl =
+            //   ad.imgUrl || (ad.img ? fileUrl(ad.img) : null);
+            const imageUrl = ad.imgUrl || (ad.img ? `${API_URL}/upload/${ad.img}` : null);
+            
             return (
-              <Col span={24} key={ad.id || idx}>
+              <Col span={24} key={ad.id}>
                 <Card
                   hoverable
                   size="small"
@@ -122,17 +124,10 @@ export default function AppLayout({ children }) {
                   cover={
                     imageUrl ? (
                       <img
-                        src={`${ad.img}`} // ✅ imageUrl을 그대로 사용         
-                        alt={`광고 이미지 ${idx}`} // ✅ idx를 map에서 받아 사용
-                        style={{ maxHeight: 300, objectFit: "cover", borderRadius: "8px" }}
+                        src={imageUrl}
+                        alt="광고 이미지" // ✅ 제목 대신 일반 alt 텍스트
+                        style={{ maxHeight: 200, objectFit: "cover" }}
                       />
-
-                    // <Image
-                    //   src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${img}`}
-                    //   alt={`post image ${idx}`}
-                    //   style={{ maxWidth: "100%", borderRadius: "12px", objectFit: "cover" }}
-                    // />
-
                     ) : null
                   }
                 />
@@ -197,24 +192,42 @@ export default function AppLayout({ children }) {
       </Drawer>
 
       {/* ✅ Content + 좌우 광고 영역 */}
-      <Content style={{ padding: "16px" }}>
-        <Row gutter={[16, 16]}>
-          {/* ✅ 왼쪽 광고 */}
-          <Col xs={24} md={6} lg={6}>
-            {renderAds()}
-          </Col>
-
-          {/* ✅ 메인 콘텐츠 중앙 */}
-          <Col xs={24} md={12} lg={12}>
-            <div style={{ maxWidth: "100%" }}>{children}</div>
-          </Col>
-
-          {/* ✅ 오른쪽 광고 */}
-          <Col xs={24} md={6} lg={6}>
-            {renderAds()}
-          </Col>
-        </Row>
+      <Content style={{ padding: "28px 16px" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+          {children}
+        </div>
       </Content>
+        {/* 왼쪽 광고 */}
+      {screens.lg && (
+        <div
+          style={{
+            position: "fixed",
+            left: 20,
+            top: 120,
+            width: 140,
+            zIndex: 10,
+          }}
+        >
+          {renderAds()}
+        </div>
+      )}
+
+        {/* 오른쪽 광고 */}
+        {screens.lg && (
+          <div
+            style={{
+              position: "fixed",
+              right: 20,
+              top: 120,
+              width: 140,
+              zIndex: 10,
+            }}
+          >
+            {renderAds()}
+          </div>
+        )}
+
+
     </Layout>
   );
 }
