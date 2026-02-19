@@ -97,7 +97,7 @@ export default function AppLayout({ children }) {
     return found ? [found.key] : ["/"];
   }, [router.pathname, menuItems]);
 
-  //const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
   // ✅ 광고 카드 렌더링 함수
   const renderAds = () => (
@@ -110,8 +110,8 @@ export default function AppLayout({ children }) {
         <Row gutter={[8, 8]}>
           {latestAds.map((ad, idx) => {
             // ✅ 항상 ad 객체를 통해 접근
-            //const imageUrl =
-            //  ad.imgUrl || (ad.img ? `${process.env.NEXT_PUBLIC_API_URL}/upload/${ad.img}` : null);
+            const imageUrl =
+               ad.imgUrl || (ad.img ? `${process.env.NEXT_PUBLIC_API_URL}/upload/${ad.img}` : null);
 
             return (
               <Col span={24} key={ad.id || idx}>
