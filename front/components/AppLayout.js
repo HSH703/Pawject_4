@@ -120,10 +120,10 @@ export default function AppLayout({ children }) {
                   style={{ borderRadius: 8 }}
                   cover={
                     imageUrl ? (
-                      <img
-                        src={imageUrl}
-                        alt="광고 이미지" // ✅ 제목 대신 일반 alt 텍스트
-                        style={{ maxHeight: 300, objectFit: "cover" }}
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${img}`}
+                        alt={`post image ${idx}`}
+                        style={{ maxWidth: "100%", borderRadius: "12px", objectFit: "cover" }}
                       />
                     ) : null
                   }
