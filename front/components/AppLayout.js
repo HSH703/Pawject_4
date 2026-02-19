@@ -99,7 +99,7 @@ export default function AppLayout({ children }) {
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8484";
 
-  // ✅ 광고 카드 렌더링 함수 (중복 제거)
+  // ✅ 광고 카드 렌더링 함수
   const renderAds = () => (
     <Card title="📢 최신 광고" bordered={false} size="small">
       {loading ? (
@@ -108,22 +108,23 @@ export default function AppLayout({ children }) {
         <Text type="danger">광고 불러오기 실패: {error}</Text>
       ) : latestAds && latestAds.length > 0 ? (
         <Row gutter={[8, 8]}>
-          {latestAds.map((ad) => {
+          {latestAds.map((ad, idx) => {
+            // ✅ 항상 ad 객체를 통해 접근
             const imageUrl =
               ad.imgUrl || (ad.img ? `${API_URL}/upload/${ad.img}` : null);
 
             return (
-              <Col span={24} key={ad.id}>
+              <Col span={24} key={ad.id || idx}>
                 <Card
                   hoverable
                   size="small"
                   style={{ borderRadius: 8 }}
                   cover={
                     imageUrl ? (
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${img}`}
-                        alt={`post image ${idx}`}
-                        style={{ maxWidth: "100%", borderRadius: "12px", objectFit: "cover" }}
+                      <img
+                        src={imageUrl} // ✅ imageUrl을 그대로 사용
+                        alt={`광고 이미지 ${idx}`} // ✅ idx를 map에서 받아 사용
+                        style={{ maxHeight: 300, objectFit: "cover", borderRadius: "8px" }}
                       />
                     ) : null
                   }
