@@ -99,7 +99,7 @@ export default function AppLayout({ children }) {
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8484";
 
-  // ✅ 광고 카드 렌더링 함수 (이미지 크기 및 경로 보완)
+  // ✅ 광고 카드 렌더링 함수 (중복 제거)
   const renderAds = () => (
     <Card title="📢 최신 광고" bordered={false} size="small">
       {loading ? (
@@ -109,7 +109,6 @@ export default function AppLayout({ children }) {
       ) : latestAds && latestAds.length > 0 ? (
         <Row gutter={[8, 8]}>
           {latestAds.map((ad) => {
-            // ✅ 이미지 경로 처리 보완
             const imageUrl =
               ad.imgUrl || (ad.img ? `${API_URL}/upload/${ad.img}` : null);
 
@@ -123,9 +122,8 @@ export default function AppLayout({ children }) {
                     imageUrl ? (
                       <img
                         src={imageUrl}
-                        alt="광고 이미지"
-                        // ✅ 광고 크기 조정: contain으로 변경, 높이 축소
-                        style={{ maxHeight: 200, objectFit: "contain", width: "100%" }}
+                        alt="광고 이미지" // ✅ 제목 대신 일반 alt 텍스트
+                        style={{ maxHeight: 300, objectFit: "cover" }}
                       />
                     ) : null
                   }
@@ -193,18 +191,18 @@ export default function AppLayout({ children }) {
       {/* ✅ Content + 좌우 광고 영역 */}
       <Content style={{ padding: "16px" }}>
         <Row gutter={[16, 16]}>
-          {/* ✅ 왼쪽 광고 (너무 크지 않게 md=4, lg=4로 축소) */}
-          <Col xs={24} md={4} lg={4}>
+          {/* ✅ 왼쪽 광고 */}
+          <Col xs={24} md={6} lg={6}>
             {renderAds()}
           </Col>
 
           {/* ✅ 메인 콘텐츠 중앙 */}
-          <Col xs={24} md={16} lg={16}>
+          <Col xs={24} md={12} lg={12}>
             <div style={{ maxWidth: "100%" }}>{children}</div>
           </Col>
 
-          {/* ✅ 오른쪽 광고 (너무 크지 않게 md=4, lg=4로 축소) */}
-          <Col xs={24} md={4} lg={4}>
+          {/* ✅ 오른쪽 광고 */}
+          <Col xs={24} md={6} lg={6}>
             {renderAds()}
           </Col>
         </Row>
